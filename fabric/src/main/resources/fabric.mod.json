@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "qubitsaaatweaks",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "${description}",
+  "authors": [
+    "${mod_author}"
+  ],
+  "contact": {},
+  "license": "${license}",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "org.qubitdev.qubitsaaatweaks.QubitsAAATweaksFabric"
+    ],
+    "modmenu": [
+      "org.qubitdev.qubitsaaatweaks.QubitsAAATweaksModMenu"
+    ]
+  },
+  "mixins": [
+    "${mod_id}.mixins.json",
+    "${mod_id}.fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}",
+    "java": ">=17",
+    "aaa_particles": ">=${aaa_particles_version}",
+    "cloth-config": ">=11.0.0"
+  }
+}

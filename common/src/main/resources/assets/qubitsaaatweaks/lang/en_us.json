@@ -1,0 +1,23 @@
+{
+  "text.autoconfig.qubitsaaatweaks.title": "Qubit's AAA Tweaks Config",
+  "text.autoconfig.qubitsaaatweaks.category.bloom": "Bloom",
+  "text.autoconfig.qubitsaaatweaks.category.optimization": "Optimization",
+  "text.autoconfig.qubitsaaatweaks.option.bloomAll": "Bloom All",
+  "text.autoconfig.qubitsaaatweaks.option.bloomAll.@Tooltip": "Controls when the post-processing bloom pass is active for AAAParticles effects.",
+  "text.autoconfig.qubitsaaatweaks.option.bloomAll.on": "On",
+  "text.autoconfig.qubitsaaatweaks.option.bloomAll.only_when_iris_shader_loaded": "Iris Shaders Only",
+  "text.autoconfig.qubitsaaatweaks.option.bloomAll.off": "Off",
+  "text.autoconfig.qubitsaaatweaks.option.bloomBlacklist": "Bloom blacklist",
+  "text.autoconfig.qubitsaaatweaks.option.bloomBlacklist.@Tooltip": "Mod namespaces excluded from particle bloom (e.g. 'modid').",
+  "text.autoconfig.qubitsaaatweaks.option.bloomBlacklist.hint": "Enter mod namespace...",
+  "text.autoconfig.qubitsaaatweaks.option.preloadEffects": "Preload Effects",
+  "text.autoconfig.qubitsaaatweaks.option.preloadEffects.@Tooltip": "Pre-initialize Effekseer effects during resource reload to eliminate first-spawn frame stutters.",
+  "text.autoconfig.qubitsaaatweaks.option.skipIdlePasses": "Skip Idle Passes",
+  "text.autoconfig.qubitsaaatweaks.option.skipIdlePasses.@Tooltip": "Skip Effekseer world/hand passes and fullscreen depth blits when no emitters of that type are active.",
+  "text.autoconfig.qubitsaaatweaks.option.lazyDistortionBackgroundCopy": "Lazy Distortion Background Copy",
+  "text.autoconfig.qubitsaaatweaks.option.lazyDistortionBackgroundCopy.@Tooltip": "Only copy the fullscreen color attachment into DISTORTION_BACKGROUND when an active emitter uses a distortion texture.",
+  "text.autoconfig.qubitsaaatweaks.option.skipPixelStorePollingOnDraw": "Skip PixelStore Polling On Draw",
+  "text.autoconfig.qubitsaaatweaks.option.skipPixelStorePollingOnDraw.@Tooltip": "Bypass redundant glGetInteger and glPixelStorei polling during per-frame Effekseer draw calls.",
+  "text.autoconfig.qubitsaaatweaks.error.emptyNamespace": "Namespace cannot be empty",
+  "text.autoconfig.qubitsaaatweaks.error.invalidNamespace": "Invalid mod namespace (only a-z, 0-9, _, -, . allowed)"
+}

@@ -1,0 +1,98 @@
+plugins {
+    id 'multiloader-loader'
+    id 'net.neoforged.moddev.legacyforge'
+}
+
+mixin {
+    add(sourceSets.main, "${mod_id}.refmap.json")
+
+    config("${mod_id}.mixins.json")
+    config("${mod_id}.forge.mixins.json")
+}
+
+legacyForge {
+    version = "${minecraft_version}-${forge_version}"
+
+    validateAccessTransformers = true
+
+    def at = project(':common').file('src/main/resources/META-INF/accesstransformer.cfg')
+    if (at.exists()) {
+        accessTransformers = [at.absolutePath]
+    }
+
+    parchment {
+        minecraftVersion = parchment_minecraft
+        mappingsVersion = parchment_version
+    }
+
+    runs {
+        configureEach {
+            ideName = "${mod_name} Forge ${it.name.capitalize()}"
+            gameDirectory = rootProject.file("run/${it.name}")
+            jvmArguments = ["-Xms4G", "-Xmx8G", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=100",
+                            "-XX:+UnlockExperimentalVMOptions", "-XX:+AllowEnhancedClassRedefinition",
+                            "-Dterminal.ansi=true"]
+
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+
+        client {
+            client()
+
+            programArguments.addAll('--username', 'TuffyBoy####')
+        }
+
+        data {
+            data()
+
+            programArguments.addAll('--mod', mod_id, '--all')
+            programArguments.addAll('--output', file('src/generated/resources/').getAbsolutePath())
+            programArguments.addAll('--existing', file('src/main/resources/').getAbsolutePath())
+        }
+
+        server {
+            server()
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+sourceSets.main.resources.srcDir 'src/generated/resources'
+
+// Game runs on JBR 17 - LWJGL 3.3.1 blows up under a debugger on JDK 21+
+def runJavaLauncher = javaToolchains.launcherFor {
+    languageVersion = JavaLanguageVersion.of(java_version as int)
+    vendor = JvmVendorSpec.JETBRAINS
+}
+
+tasks.matching { it.name.startsWith("run") }.configureEach {
+    it.javaLauncher = runJavaLauncher
+}
+
+dependencies {
+    compileOnly project(":common")
+
+    annotationProcessor("org.spongepowered:mixin:${mixin_version}:processor")
+
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${mixinextras_version}"))
+    implementation(jarJar("io.github.llamalad7:mixinextras-forge:${mixinextras_version}"))
+
+    modImplementation("cn.chloeprime:aaa_particles-forge-1.20.1:${aaa_particles_version}")
+    modImplementation("me.shedaniel.cloth:cloth-config-forge:${cloth_config_version}")
+
+    modImplementation("curse.maven:embeddium-908741:${embeddium_file_id}")
+    modImplementation("curse.maven:oculus-581495:${oculus_file_id}")
+}
+
+jar {
+    finalizedBy('reobfJar')
+
+    manifest.attributes([
+            "MixinConfigs": "${mod_id}.mixins.json,${mod_id}.forge.mixins.json"
+    ])
+}

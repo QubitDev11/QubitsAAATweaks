@@ -1,0 +1,42 @@
+plugins {
+    id 'multiloader-common'
+    id 'net.neoforged.moddev.legacyforge'
+}
+
+legacyForge {
+    mcpVersion = minecraft_version
+    if (file("src/main/resources/META-INF/accesstransformer.cfg").exists()) {
+        accessTransformers = ["src/main/resources/META-INF/accesstransformer.cfg"]
+    }
+    parchment {
+        minecraftVersion = parchment_minecraft
+        mappingsVersion = parchment_version
+    }
+}
+
+dependencies {
+    compileOnly group: 'org.spongepowered', name: 'mixin', version: '0.8.5'
+    compileOnly group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
+
+    // Compile-time only. The common sources are recompiled inside the fabric and forge projects
+    // against that loader's own AAAParticles / Cloth Config artifact, so nothing loader specific
+    // ends up on common's runtime classpath.
+    compileOnly "cn.chloeprime:aaa_particles-forge-1.20.1:${aaa_particles_version}"
+    compileOnly "me.shedaniel.cloth:cloth-config-forge:${cloth_config_version}"
+}
+
+configurations {
+    commonJava {
+        canBeResolved = false
+        canBeConsumed = true
+    }
+    commonResources {
+        canBeResolved = false
+        canBeConsumed = true
+    }
+}
+
+artifacts {
+    commonJava sourceSets.main.java.sourceDirectories.singleFile
+    commonResources sourceSets.main.resources.sourceDirectories.singleFile
+}

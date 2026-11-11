@@ -1,0 +1,6 @@
+plugins {
+    // Declared here so every subproject resolves the same plugin versions.
+    // apply(false) keeps the root project itself plain - the loaders apply them where needed.
+    id 'fabric-loom' version '1.15.5' apply(false)
+    id 'net.neoforged.moddev.legacyforge' version '2.0.148' apply(false)
+}
