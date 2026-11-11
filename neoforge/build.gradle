@@ -1,0 +1,54 @@
+plugins {
+    id 'multiloader-loader'
+    id 'net.neoforged.moddev'
+}
+
+neoForge {
+    version = neoforge_version
+    // Automatically enable AccessTransformers if the file exists
+    def at = project(':common').file('src/main/resources/META-INF/accesstransformer.cfg')
+    if (at.exists()) {
+        accessTransformers.from(at.absolutePath)
+    }
+    parchment {
+        minecraftVersion = parchment_minecraft
+        mappingsVersion = parchment_version
+    }
+
+    runs {
+        configureEach {
+            ideName = "NeoForge ${it.name.capitalize()} (${project.path})"
+            gameDirectory = rootProject.file("run/neoforge-${it.name}")
+            jvmArguments = ["-Xms4G", "-Xmx8G", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=100",
+                            "-XX:+UnlockExperimentalVMOptions", "-XX:+AllowEnhancedClassRedefinition",
+                            "-Dterminal.ansi=true"]
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+
+        client {
+            client()
+
+            programArguments.addAll('--username', 'TuffyBoy####')
+        }
+
+        server {
+            server()
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+dependencies {
+    compileOnly project(":common")
+
+    implementation "cn.chloeprime:aaa_particles-neoforge-1.21.1:${aaa_particles_version}"
+    implementation "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
+
+    implementation "maven.modrinth:sodium:${sodium_version}"
+    implementation "maven.modrinth:iris:${iris_version}"
+}

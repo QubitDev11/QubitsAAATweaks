@@ -1,0 +1,57 @@
+{
+    "targets": [
+        "bloom_source",
+        "bloom_ping",
+        "bloom_tight"
+    ],
+    "passes": [
+        {
+            "name": "qubitsaaatweaks:particle_bloom_bright",
+            "intarget": "bloom_source",
+            "outtarget": "bloom_ping"
+        },
+        {
+            "name": "qubitsaaatweaks:particle_bloom_blur",
+            "intarget": "bloom_ping",
+            "outtarget": "bloom_source",
+            "uniforms": [
+                { "name": "BlurDir", "values": [ 1.0, 0.0 ] },
+                { "name": "Radius",  "values": [ 1.75 ] }
+            ]
+        },
+        {
+            "name": "qubitsaaatweaks:particle_bloom_blur",
+            "intarget": "bloom_source",
+            "outtarget": "bloom_tight",
+            "uniforms": [
+                { "name": "BlurDir", "values": [ 0.0, 1.0 ] },
+                { "name": "Radius",  "values": [ 1.75 ] }
+            ]
+        },
+        {
+            "name": "qubitsaaatweaks:particle_bloom_blur",
+            "intarget": "bloom_tight",
+            "outtarget": "bloom_ping",
+            "uniforms": [
+                { "name": "BlurDir", "values": [ 1.0, 0.0 ] },
+                { "name": "Radius",  "values": [ 4.5 ] }
+            ]
+        },
+        {
+            "name": "qubitsaaatweaks:particle_bloom_combine",
+            "intarget": "bloom_ping",
+            "outtarget": "bloom_source",
+            "auxtargets": [
+                {
+                    "name": "TightBloomSampler",
+                    "id": "bloom_tight"
+                }
+            ],
+            "uniforms": [
+                { "name": "BlurDir",        "values": [ 0.0, 1.0 ] },
+                { "name": "Radius",         "values": [ 4.5 ] },
+                { "name": "BloomIntensity", "values": [ 1.15 ] }
+            ]
+        }
+    ]
+}

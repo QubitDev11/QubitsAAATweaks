@@ -1,0 +1,7 @@
+plugins {
+    // Declared here so every subproject resolves the same plugin versions.
+    // apply(false) keeps the root project itself plain - the loaders apply them where needed.
+    // Loom 1.19.x needs Gradle >= 9.8 and a JVM 25+ build runtime; both are satisfied by the wrapper + daemon settings.
+    id 'fabric-loom' version '1.19.4' apply(false)
+    id 'net.neoforged.moddev' version '2.0.148' apply(false)
+}
